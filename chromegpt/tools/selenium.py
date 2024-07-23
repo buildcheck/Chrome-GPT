@@ -37,7 +37,7 @@ class SeleniumWrapper:
             selenium = SeleniumWrapper()
     """
 
-    def __init__(self, headless: bool = False, docker: bool = True) -> None:
+    def __init__(self, headless: bool = False, docker: bool = False) -> None:
         """Initialize Selenium and start interactive session."""
         chrome_options = Options()
         if headless:
@@ -51,7 +51,8 @@ class SeleniumWrapper:
             )
         else:
             self.driver = webdriver.Chrome(options=chrome_options)
-        self.driver.implicitly_wait(5)  # Wait 5 seconds for elements to load
+        self.driver.implicitly_wait(30)  # Wait 5 seconds for elements to load
+        self.driver.set_page_load_timeout(30)  # Wait 5 seconds for elements to load
 
     def __del__(self) -> None:
         """Close Selenium session."""

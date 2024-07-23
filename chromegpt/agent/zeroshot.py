@@ -41,14 +41,14 @@ def _get_full_inputs(
 
 
 class ZeroShotAgent(ChromeGPTAgent):
-    def __init__(self, model: str = "gpt-3.5-turbo", verbose: bool = False) -> None:
+    def __init__(self, model: str = "gpt-3.5-turbo", verbose: bool = False, max_iterations: int = 4) -> None:
         """Initialize the ZeroShotAgent."""
         self.model = model
         self.agent = get_zeroshot_agent(
             llm=ChatOpenAI(model_name=model, temperature=0),  # type: ignore
             verbose=verbose,
         )
-        self.agent.max_iterations = 30
+        self.agent.max_iterations = max_iterations
         self.agent.agent.__dict__["get_full_inputs"] = types.MethodType(
             _get_full_inputs, self.agent.agent
         )
